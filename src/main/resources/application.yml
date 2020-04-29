@@ -1,0 +1,24 @@
+server:
+  port: 1081
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/diet
+    username: wfrp
+    password: wfrp
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+        jdbc:
+          lob:
+            non_contextual_creation: true
+  flyway:
+    locations: classpath:/db/migration,/db/data

@@ -1,0 +1,40 @@
+package pl.javahello.dietcalculator.diet;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.NaturalId;
+import org.hibernate.validator.constraints.Length;
+import pl.khuzzuk.remote.RemoteEntity;
+
+@Getter
+@Setter
+@EqualsAndHashCode(of = "name")
+@Entity
+@Table(schema = "diet")
+@RemoteEntity
+public class Product {
+
+  @Id
+  @SequenceGenerator(name = "product_seq_gen",
+                     schema = "diet",
+                     sequenceName = "product_id_seq",
+                     allocationSize = 1)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_seq_gen")
+  private Long id;
+  @NaturalId
+  private @Length(min = 3, max = 100) String name;
+  private int calories;
+  private float proteins;
+  private float fat;
+  private float carbohydrate;
+  private float dietaryFiber;
+  private float salt;
+  private float carbon;
+}
