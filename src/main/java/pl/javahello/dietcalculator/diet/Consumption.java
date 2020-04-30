@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,10 +32,10 @@ public class Consumption {
   private Long id;
   private Date date = new Date(System.currentTimeMillis());
   @ManyToOne
-  private Product product;
+  private @NotNull Product product;
   @ManyToOne
-  private Portion portion;
+  private @NotNull Portion portion;
   @ManyToOne
   private Meal meal;
-  private float amount;
+  private @Min(0) float amount;
 }

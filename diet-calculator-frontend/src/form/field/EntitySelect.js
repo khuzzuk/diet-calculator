@@ -1,8 +1,8 @@
+import {FormLabel} from "@material-ui/core";
 import React, {Component} from "react";
+import {withTranslation} from "react-i18next";
 import Select from "react-select";
 import makeAnimated from 'react-select/animated'
-import {FormLabel} from "@material-ui/core";
-import {withTranslation} from "react-i18next";
 import {State} from "../../state/State";
 
 class EntitySelect extends Component {
@@ -15,10 +15,11 @@ class EntitySelect extends Component {
             data = State.data[suggestions],
             value = State.data.entity[name],
             multi = false,
-            onChange = this.updateEntity
+            onChange = this.updateEntity,
+            ...other
         } = this.props;
 
-        return <div>
+        return <div {...other}>
             <FormLabel>{label}</FormLabel>
             <Select textFieldProps={{label: label, InputLabelProps: {shrink: false}}}
                     options={data}
@@ -31,16 +32,13 @@ class EntitySelect extends Component {
                     }}
                     filterOption={(option, input) => option.data.name.startsWith(input)}
                     onChange={onChange}
-                    value={value}
+                    value={value || null}
                     isMulti={multi}/>
         </div>;
     }
 
     updateEntity = newValue => {
-        const {name} = this.props;
-        const entity = State.data.entity;
-        entity.updateWith({[name]: newValue});
-        State.update({entity: entity})
+        State.updateEntity({[this.props.name]: newValue})
     };
 }
 

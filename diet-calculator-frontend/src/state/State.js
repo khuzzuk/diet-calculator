@@ -31,7 +31,7 @@ export const State = {
     fetchingFinished(entityName: string) {
         this.data.fetching.delete(entityName);
         this.update({fetching: this.data.fetching});
-    }, showConsumption() {
-        this.update({entity: null, showForm: null, showTable: false, showConsumption: true})
+    }, showConsumption(entity) {
+        this.update({entity: entity, showForm: null, showTable: false, showConsumption: true})
     }
 };

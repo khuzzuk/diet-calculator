@@ -21,9 +21,50 @@ public class ReportService {
 
   @Transactional
   @GetMapping("today")
-  public List<ConsumptionDTO> getTodayConsumption() {
+  public Report getTodayConsumption() {
     Date today = new Date(System.currentTimeMillis());
     final List<Consumption> found = reportRepo.findAllByDate(today);
-    return consumptionDTOAdapter.list(found);
+
+    int calories = 0;
+    float proteins = 0F;
+    float fat = 0F;
+    float carbohydrate = 0F;
+    float dietaryFiber = 0F;
+    float salt = 0F;
+    float carbon = 0F;
+
+    for (Consumption consumption : found) {
+      calories += consumption.getProduct().getCalories() *
+                  consumption.getAmount() *
+                  consumption.getPortion().getWeight() / 100;
+      proteins += consumption.getProduct().getProteins() *
+                  consumption.getAmount() *
+                  consumption.getPortion().getWeight() / 100;
+      fat += consumption.getProduct().getFat() *
+             consumption.getAmount() *
+             consumption.getPortion().getWeight() / 100;
+      carbohydrate += consumption.getProduct().getCarbohydrate() *
+                      consumption.getAmount() *
+                      consumption.getPortion().getWeight() / 100;
+      dietaryFiber += consumption.getProduct().getDietaryFiber() *
+                      consumption.getAmount() *
+                      consumption.getPortion().getWeight() / 100;
+      salt += consumption.getProduct().getSalt() *
+              consumption.getAmount() *
+              consumption.getPortion().getWeight() / 100;
+      carbon += consumption.getProduct().getCarbon() *
+                consumption.getAmount() *
+                consumption.getPortion().getWeight() / 100;
+    }
+
+    return Report.builder()
+                 .calories(calories)
+                 .proteins(proteins)
+                 .fat(fat)
+                 .carbohydrate(carbohydrate)
+                 .dietaryFiber(dietaryFiber)
+                 .salt(salt)
+                 .carbon(carbon)
+                 .build();
   }
 }

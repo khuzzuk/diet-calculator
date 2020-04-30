@@ -4,6 +4,7 @@ import IconButton from "@material-ui/core/IconButton";
 import withStyles from "@material-ui/core/styles/withStyles";
 import React, {Component} from "react";
 import {withTranslation} from "react-i18next";
+import Consumption from "../model/diet/Consumption";
 import Meal from "../model/diet/Meal";
 import Portion from "../model/diet/Portion";
 import Product from "../model/diet/Product";
@@ -31,7 +32,7 @@ class TopMenu extends Component {
       <Toolbar>
         <MenuComponent name={'data'}
                        entities={[Product.entityName, Portion.entityName, Meal.entityName]}/>
-        <Button onClick={() => State.showConsumption()}>{t('consumption')}</Button>
+        <Button onClick={() => State.showConsumption(new Consumption())}>{t('consumption')}</Button>
         <div className={classes.languageIcon}>
           {State.data.fetching.size > 0 && <IconButton><CircularProgress
               color={"secondary"}/></IconButton>}
